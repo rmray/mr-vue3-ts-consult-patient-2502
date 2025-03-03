@@ -8,7 +8,7 @@ import router from './router'
 
 // const name = 'abc'
 
-a = 'abc'
+a = "ccc"
 
 console.log('test3')
 
