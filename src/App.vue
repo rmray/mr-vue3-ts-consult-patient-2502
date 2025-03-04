@@ -1,16 +1,14 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="app">
     App
+    <van-button type="primary">主要按钮</van-button>
   </div>
 </template>
 
-
 <style lang="scss" scoped>
-.app{
+.app {
   color: inherit;
 }
 </style>

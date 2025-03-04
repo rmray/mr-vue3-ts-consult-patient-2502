@@ -5,4 +5,6 @@ const router = createRouter({
   routes: []
 })
 
+// console.log('env:', import.meta)
+
 export default router
