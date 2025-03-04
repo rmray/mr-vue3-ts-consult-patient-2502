@@ -4,4 +4,5 @@ export interface User {
   account: string // 账号
   mobile: string // 手机号
   avatar: string // 头像
+  refreshToken: string // 刷新令牌
 }
