@@ -3,7 +3,7 @@
 <template>
   <div class="app">
     App
-    <van-button type="primary">主要按钮</van-button>
+    <van-button type="primary" size="small">主要按钮</van-button>
   </div>
 </template>
 
