@@ -27,7 +27,7 @@ export default defineConfig({
 
     // svg地图
     createSvgIconsPlugin({
-      iconDirs: [path.resolve(process.cwd(), 'src/assets/svg')]
+      iconDirs: [path.resolve(process.cwd(), './src/assets/icons')]
     })
   ],
   resolve: {

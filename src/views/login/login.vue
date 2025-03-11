@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { mobileRules, passwordRules } from '@/utils/rules'
-import { showFailToast } from 'vant'
+import { codeRules, mobileRules, passwordRules } from '@/utils/rules'
+import { showFailToast, showSuccessToast } from 'vant'
+import { getCode, loginByCode, loginByPassword } from '@/services/user'
+import { useUserStore } from '@/store'
+import { useRouter } from 'vue-router'
+import mrRequest from '@/utils/request'
 
 /** 监听点击事件 */
 function clickRightFn() {
@@ -10,18 +14,44 @@ function clickRightFn() {
   // TODO: 跳转注册页面
 }
 
-/** 表单 */
+// 表单
+// 密码登录
 const mobile = ref('')
 const password = ref('')
 const isAgree = ref(false)
+const isShow = ref(false)
+// 短信验证码登录
+const isPass = ref(true)
+const code = ref('')
+
+/** 获取短信验证码 */
+async function hdlGetCode() {
+  const res = await getCode({ mobile: mobile.value, type: 'login' })
+  code.value = res.data.code
+}
 
 /** 监听表单提交事件 */
-function hdlSubmit() {
+const userStore = useUserStore()
+const router = useRouter()
+async function hdlSubmit() {
   // 验证是否勾选协议
   if (!isAgree.value) return showFailToast('请勾选协议后再提交')
 
-  console.log('提交表单')
+  // 登录操作(合并密码登录和短信验证码登录) */
+  const res = isPass.value
+    ? await loginByPassword({ mobile: mobile.value, password: password.value })
+    : await loginByCode({ mobile: mobile.value, code: code.value })
+
+  if (res.code === 10000) {
+    userStore.setUser(res.data)
+    showSuccessToast('登录成功!')
+    router.push((router.currentRoute.value.query.returnUrl as string) || '/user')
+  } else {
+    showFailToast('登录失败!\n' + res.message)
+  }
 }
+
+// TODO: 第三方登录
 </script>
 
 <template>
@@ -31,9 +61,9 @@ function hdlSubmit() {
 
     <!-- 头部 -->
     <div class="login-head">
-      <h3>密码登录</h3>
-      <a href="javascript:;">
-        <span>短信验证码登录</span>
+      <h3>{{ isPass ? '密码登录' : '短信验证码登录' }}</h3>
+      <a href="javascript:;" @click="isPass = !isPass">
+        <span>{{ isPass ? '短信验证码登录' : '密码登录' }}</span>
         <van-icon name="arrow"></van-icon>
       </a>
     </div>
@@ -41,7 +71,22 @@ function hdlSubmit() {
     <!-- 表单 -->
     <van-form autocomplete="off" @submit="hdlSubmit">
       <van-field placeholder="请输入手机号" type="tel" v-model="mobile" :rules="mobileRules"></van-field>
-      <van-field placeholder="请输入密码" type="password" v-model="password" :rules="passwordRules"></van-field>
+      <van-field
+        v-if="isPass"
+        placeholder="请输入密码"
+        :type="isShow ? 'text' : 'password'"
+        v-model="password"
+        :rules="passwordRules"
+      >
+        <template #button>
+          <cp-icon :name="`login-eye-${isShow ? 'on' : 'off'}`" @click="isShow = !isShow"></cp-icon>
+        </template>
+      </van-field>
+      <van-field v-else placeholder="短信验证码" type="text" v-model="code" :rules="codeRules">
+        <template #button>
+          <span class="btn-send" @click="hdlGetCode">发送验证码</span>
+        </template>
+      </van-field>
       <div class="cp-cell">
         <van-checkbox v-model="isAgree">
           <span>我已同意</span>
