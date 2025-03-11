@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
 import 'virtual:svg-icons-register'
 
-import router from './router'
 import pinia from './store'
+import router from './router'
 import App from './App.vue'
 import 'vant/lib/index.css'
 import '@/assets/css/main.scss'
