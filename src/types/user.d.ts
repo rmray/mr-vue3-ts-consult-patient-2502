@@ -14,3 +14,18 @@ export interface User {
   avatar: string // 头像
   refreshToken: string // 刷新令牌
 }
+
+type OmitUser = Omit<User, 'token' | 'refreshToken'>
+export type UserInfo = OmitUser & {
+  likeNumber: number // 关注数量
+  collectionNumber: number // 收藏数量
+  score: number // 我的总积分
+  couponNumber: number // 我的优惠券数量
+  consultationInfo: any[] // 问诊中信息
+  orderInfo: {
+    paidNumber: number // 待付款
+    receivedNumber: number // 待发货
+    shippedNumber: number // 待收货
+    finishedNumber: number // 已完成
+  }
+}

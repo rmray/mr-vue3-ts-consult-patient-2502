@@ -12,12 +12,12 @@ const mrRequest = new MrRequest({
   interceptors: {
     requestInterceptor: (config) => {
       // 携带token
-      const user = localCache.getItem('user')
+      const { user } = localCache.getItem('user')
       const token = user?.token
+      // console.log('token', token, user)
       if (config.headers && token) {
         config.headers.Authorization = 'Bearer ' + token
       }
-      console.log(config)
 
       return config
     },
