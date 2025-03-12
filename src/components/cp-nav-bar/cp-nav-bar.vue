@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
-defineProps<{
+const props = defineProps<{
   title?: string
   rightText?: string
+  back?: () => void
 }>()
 const emit = defineEmits<{
   (e: 'click-right'): void
@@ -17,7 +18,10 @@ function hdlClickRight() {
 /** 监听点击左侧返回按钮，执行返回页面 */
 const router = useRouter()
 function hdlClickLeft() {
-  // console.log(history.state)
+  // 判断是否存在back回调，存在则执行
+  if (props.back) return props.back()
+
+  // 正常返回逻辑
   if (history.state?.back === null) {
     router.push('/')
   } else {

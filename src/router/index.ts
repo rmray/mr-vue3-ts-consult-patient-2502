@@ -10,7 +10,6 @@ NProgress.configure({ showSpinner: false })
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/login', component: () => import('@/views/login/login.vue') },
     {
       path: '/',
       redirect: 'home',
@@ -21,7 +20,11 @@ const router = createRouter({
         { path: 'notify', meta: { title: '消息通知' }, component: () => import('@/views/notify/notify.vue') },
         { path: 'user', meta: { title: '我的' }, component: () => import('@/views/user/user.vue') }
       ]
-    }
+    },
+    { path: '/login', meta: { title: '登录' }, component: () => import('@/views/login/login.vue') },
+    { path: '/patient', meta: { title: '家庭档案' }, component: () => import('@/views/patient/patient.vue') },
+    { path: '/consult', meta: { title: '问诊' }, component: () => import('@/views/consult/consult.vue') },
+    { path: '/order', meta: { title: '订单' }, component: () => import('@/views/order/order.vue') }
   ]
 })
 
