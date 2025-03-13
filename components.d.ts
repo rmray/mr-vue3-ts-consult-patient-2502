@@ -26,13 +26,18 @@ declare module 'vue' {
     VanForm: typeof import('vant/es')['Form']
     VanIcon: typeof import('vant/es')['Icon']
     VanImage: typeof import('vant/es')['Image']
+    VanList: typeof import('vant/es')['List']
     VanNavbar: typeof import('vant/es')['Navbar']
     VanNavBar: typeof import('vant/es')['NavBar']
     VanNavbarItem: typeof import('vant/es')['NavbarItem']
     VanPopup: typeof import('vant/es')['Popup']
     VanRouter: typeof import('vant/es')['Router']
     VanRow: typeof import('vant/es')['Row']
+    VanSwipe: typeof import('vant/es')['Swipe']
+    VanSwipeItem: typeof import('vant/es')['SwipeItem']
+    VanTab: typeof import('vant/es')['Tab']
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
+    VanTabs: typeof import('vant/es')['Tabs']
   }
 }
