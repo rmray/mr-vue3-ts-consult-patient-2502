@@ -22,8 +22,10 @@ export const useConsultStore = defineStore(
       consult.value.consultFlag = illness.consultFlag
       consult.value.pictures = illness.pictures
     }
+    // 患者ID
+    const setPatientId = (patiendId: string) => (consult.value.patientId = patiendId)
 
-    return { consult, setType, setIllnessType, setDepId, setIllness }
+    return { consult, setType, setIllnessType, setDepId, setIllness, setPatientId }
   },
   {
     persist: true
