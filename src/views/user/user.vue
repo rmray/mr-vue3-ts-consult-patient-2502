@@ -12,7 +12,7 @@ onMounted(() => {
 const userInfo = ref<UserInfo>()
 async function loadUserInfo() {
   const res = await getUserInfo()
-  console.log('res: ', res)
+  // console.log('res: ', res)
   userInfo.value = res.data
 }
 

@@ -2,9 +2,14 @@
 import { ref } from 'vue'
 import KnowledgeList from './cpns/knowledge-list/knowledge-list.vue'
 import FollowDoctor from './cpns/follow-doctor/follow-doctor.vue'
+import { useConsultStore } from '@/store'
+import { ConsultType } from '@/enum'
 
 // 选项卡
 const active = ref(1)
+
+// store
+const consultStore = useConsultStore()
 </script>
 
 <template>
@@ -31,7 +36,7 @@ const active = ref(1)
           </router-link>
         </van-col>
         <van-col span="8">
-          <router-link to="/consult/fast" class="nav">
+          <router-link to="/consult/fast" class="nav" @click="consultStore.setType(ConsultType.Fast)">
             <cp-icon name="home-graphic" />
             <p class="title">急速问诊</p>
             <p class="desc">20s医生急速回复</p>

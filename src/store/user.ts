@@ -9,6 +9,7 @@ export const useUserStore = defineStore(
     // 问题：user的TS类型有2个参数，const user: Ref<User | undefined, User | undefined>
     const user = ref<User>()
 
+    // 设置Store数据
     function setUser(newVal: User) {
       user.value = newVal
     }

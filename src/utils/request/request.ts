@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { AxiosInstance, AxiosRequestConfig } from 'axios'
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import type { MrAxiosRequestConfig } from './type'
 
 class MrRequest {
@@ -18,6 +18,7 @@ class MrRequest {
     )
     this.instance.interceptors.response.use(
       (res) => {
+        // console.log('res: ', res)
         // if (res.data.code === 10000) {
         //   // Promise.reject(new Error('请求失败'))
         //   throw new Error('请求失败')

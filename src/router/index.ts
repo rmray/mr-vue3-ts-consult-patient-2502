@@ -10,6 +10,7 @@ NProgress.configure({ showSpinner: false })
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    { path: '/login', meta: { title: '登录' }, component: () => import('@/views/login/login.vue') },
     {
       path: '/',
       redirect: 'home',
@@ -21,9 +22,28 @@ const router = createRouter({
         { path: 'user', meta: { title: '我的' }, component: () => import('@/views/user/user.vue') }
       ]
     },
-    { path: '/login', meta: { title: '登录' }, component: () => import('@/views/login/login.vue') },
     { path: '/patient', meta: { title: '家庭档案' }, component: () => import('@/views/patient/patient.vue') },
-    { path: '/consult', meta: { title: '问诊' }, component: () => import('@/views/consult/consult.vue') },
+    {
+      path: '/consult',
+      redirect: '/consult/fast',
+      children: [
+        {
+          path: 'fast',
+          meta: { title: '急速问诊' },
+          component: () => import('@/views/consult/consult-fast/consult-fast.vue')
+        },
+        {
+          path: 'department',
+          meta: { title: '选择科室' },
+          component: () => import('@/views/consult/consult-department/consult-department.vue')
+        },
+        {
+          path: 'illness',
+          meta: { title: '病情描述' },
+          component: () => import('@/views/consult/consult-illness/consult-illness.vue')
+        }
+      ]
+    },
     { path: '/order', meta: { title: '订单' }, component: () => import('@/views/order/order.vue') }
   ]
 })

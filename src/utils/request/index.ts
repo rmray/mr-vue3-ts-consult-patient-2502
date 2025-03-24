@@ -1,9 +1,11 @@
 import MrRequest from './request'
 import { BASE_URL, TIME_OUT } from './config'
 import { localCache } from '../cache'
+import { useRouter } from 'vue-router'
 
 // console.log(BASE_URL, TIME_OUT)
 
+const router = useRouter()
 const mrRequest = new MrRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
@@ -14,7 +16,7 @@ const mrRequest = new MrRequest({
       // 携带token
       const { user } = localCache.getItem('user')
       const token = user?.token
-      // console.log('token', token, user)
+
       if (config.headers && token) {
         config.headers.Authorization = 'Bearer ' + token
       }
@@ -22,7 +24,13 @@ const mrRequest = new MrRequest({
       return config
     },
     requestInterceptorCatch: (err: any) => err,
-    responseInterceptor: (res) => res,
+    responseInterceptor: (res) => {
+      if (res.status === 401) {
+        // token失效
+        router.push('/login')
+      }
+      return res
+    },
     responseInterceptorCatch: (err) => err
   }
 })
