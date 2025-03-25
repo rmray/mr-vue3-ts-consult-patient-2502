@@ -44,10 +44,18 @@ const router = createRouter({
         },
         {
           path: 'pay',
-          meta: { title: '病情描述' },
-          component: () => import('@/views/consult/consult-illness/consult-illness.vue')
+          meta: { title: '问诊支付' },
+          component: () => import('@/views/consult/consult-pay/consult-pay.vue')
         }
       ]
+    },
+    {
+      path: '/room',
+      meta: { title: '医生问诊室' },
+      component: () => import('@/views/room/room.vue'),
+      beforeEnter: (to) => {
+        if (to.query.payResult === 'false') return '/consult'
+      }
     },
     { path: '/order', meta: { title: '订单' }, component: () => import('@/views/order/order.vue') }
   ]

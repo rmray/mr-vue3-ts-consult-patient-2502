@@ -7,6 +7,11 @@ export function getPatientList() {
   return mrRequest.get<Result<Patient[]>>({ url: '/patient/mylist' })
 }
 
+/** 获取患者详情 */
+export function getPatientInfo(id: string) {
+  return mrRequest.get<Result<Patient>>({ url: `/patient/info/${id}` })
+}
+
 /** 添加患者 */
 export function addPatient(patient: Patient) {
   return mrRequest.post<Result<{ id: string }>>({ url: '/patient/add', data: patient })

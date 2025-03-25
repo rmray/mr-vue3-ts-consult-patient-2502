@@ -38,3 +38,20 @@ export type Department = SubDepartment & {
 
 /** 病情描述 */
 export type ConsultIllness = Pick<ConsultPartial, 'illnessDesc' | 'illnessTime' | 'consultFlag' | 'pictures'>
+
+/** 支付 */
+export type ConsultOrderPreParams = Pick<ConsultPartial, 'type' | 'illnessType'>
+export interface ConsultOrderPreData {
+  payment: number // 需付款
+  couponDeduction: number // 优惠券抵扣
+  couponId: string // 优惠券ID
+  pointDeduction: number // 积分抵扣
+  actualPayment: number // 实际支付
+}
+
+/** 生成支付URL */
+export interface ConsultPayParams {
+  paymentMethod: 0 | 1 // 支付方式，0 微信  1 支付宝
+  orderId: string // 订单ID
+  payCallback: string // 支付回调地址
+}
