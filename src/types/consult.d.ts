@@ -1,6 +1,7 @@
 import type { ConsultOrderStatus, ConsultType, IllnessTime } from '@/enum'
 import type { Doctor } from './home'
 import type { Patient } from './patient'
+import type { PageReq } from './base'
 
 /** 图片列表 */
 export type Image = {
@@ -58,8 +59,7 @@ export interface ConsultPayParams {
   payCallback: string // 支付回调地址
 }
 
-/** 问诊订单 */
-
+/** 问诊订单详情 */
 export type ConsultOrderItem = Consult & {
   createTime: string // 创建时间
   orderNo: string // 订单编号
@@ -77,4 +77,9 @@ export type ConsultOrderItem = Consult & {
 
   docInfo: Doctor // 医生信息
   patientInfo: Patient // 患者信息
+}
+
+/** 问诊订单列表-请求参数 */
+export type ConsultOrderListParams = PageReq & {
+  type: ConsultType // 订单类型
 }

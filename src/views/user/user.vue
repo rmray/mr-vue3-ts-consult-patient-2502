@@ -18,7 +18,7 @@ async function loadUserInfo() {
 
 // 快捷工具数据
 const tools = [
-  { label: '我的问诊', path: '/consult' },
+  { label: '我的问诊', path: '/consult/order' },
   { label: '我的处方', path: '/' },
   { label: '家庭档案', path: '/patient' },
   { label: '地址管理', path: '/' },

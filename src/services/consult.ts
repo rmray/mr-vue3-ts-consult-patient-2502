@@ -1,6 +1,7 @@
-import type { Result } from '@/types/base'
+import type { PageRes, Result } from '@/types/base'
 import type {
   ConsultOrderItem,
+  ConsultOrderListParams,
   ConsultOrderPreData,
   ConsultOrderPreParams,
   ConsultPartial,
@@ -56,6 +57,20 @@ export function getPrescription(id: string) {
 
 /** 评价问诊订单 */
 export function evaluateConsultOrder(data: EvaluateParams) {
-  console.log(data)
   return mrRequest.post({ url: '/patient/order/evaluate', data })
+}
+
+/** 获取问诊订单列表 */
+export function getConsultOrderList(params: ConsultOrderListParams) {
+  return mrRequest.get<Result<PageRes<ConsultOrderItem[]>>>({ url: '/patient/consult/order/list', params })
+}
+
+/** 取消问诊订单 */
+export function cancelConsultOrder(id: string) {
+  return mrRequest.put<any>({ url: `/patient/order/cancel/${id}` })
+}
+
+/** 删除问诊订单 */
+export function deleteConsultOrder(id: string) {
+  return mrRequest.delete<any>({ url: `/patient/order/${id}` })
 }

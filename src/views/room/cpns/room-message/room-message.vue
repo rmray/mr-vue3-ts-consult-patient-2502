@@ -10,6 +10,7 @@ import { consultFlagOptions, illnessTimeOptions } from '@/constance'
 import { useUserStore } from '@/store'
 import { getPrescription } from '@/services/consult'
 import EvaluateCard from '../evaluate-card/evaluate-card.vue'
+import { useShowPrescription } from '@/hooks/consult'
 
 defineProps<{
   msg: Message
@@ -39,12 +40,7 @@ function formatTime(time: string) {
 }
 
 /** 显示原始处方 */
-async function onShowPrescription(msg: Message) {
-  if (!msg.msg.prescription?.id) return false
-
-  const res = await getPrescription(msg.msg.prescription.id)
-  showImagePreview([res.data.url]) // 展示处方图片
-}
+const { onShowPrescription } = useShowPrescription()
 </script>
 
 <template>
@@ -136,7 +132,10 @@ async function onShowPrescription(msg: Message) {
         <div class="head">
           <div class="head-tit">
             <h3>电子处方</h3>
-            <p @click="onShowPrescription(msg)">原始处方 <van-icon name="arrow" /></p>
+            <p @click="onShowPrescription(msg.msg.prescription?.id)">
+              原始处方
+              <van-icon name="arrow" />
+            </p>
           </div>
           <p>
             {{ msg.msg.prescription?.name }} {{ msg.msg.prescription?.genderValue }} {{ msg.msg.prescription?.age }}岁

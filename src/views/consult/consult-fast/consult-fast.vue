@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { useConsultStore } from '@/store'
+import { useRouter } from 'vue-router'
 
 // store
 const consultStore = useConsultStore()
+
+/** 监听点击右侧导航 */
+const router = useRouter()
 </script>
 
 <template>
   <div class="consult-fast">
-    <cp-nav-bar title="急速问诊" right-text="问诊记录"></cp-nav-bar>
+    <cp-nav-bar title="急速问诊" right-text="问诊记录" @click-right="router.push('/consult/order')"></cp-nav-bar>
     <div class="fast-logo">
       <img class="img" src="@/assets/images/consult-fast.png" />
       <p class="text"><span>20s</span> 快速匹配专业医生</p>
