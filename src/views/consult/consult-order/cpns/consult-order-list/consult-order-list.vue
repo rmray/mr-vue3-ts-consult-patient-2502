@@ -18,9 +18,13 @@ const orderList = ref<ConsultOrderItem[]>([])
 /** 初始网络请求 */
 const current = ref(1)
 const pageSize = ref(5)
+let isRequest = false
 async function onLoad() {
+  if (finished.value || loading.value || isRequest) return
+  isRequest = true
+
   const res = await getConsultOrderList({ current: current.value, pageSize: pageSize.value, type: props.type })
-  console.log('触发onLoad事件', current.value)
+  console.log('触发onLoad事件', current.value, loading.value)
   orderList.value.push(...res.data.rows)
 
   if (current.value < res.data.pageTotal) {
@@ -30,6 +34,7 @@ async function onLoad() {
   }
 
   loading.value = false
+  isRequest = false
 }
 
 /** 监听取消订单事件 */
