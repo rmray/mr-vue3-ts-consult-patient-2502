@@ -1,4 +1,6 @@
-import type { ConsultType, IllnessTime } from '@/enum'
+import type { ConsultOrderStatus, ConsultType, IllnessTime } from '@/enum'
+import type { Doctor } from './home'
+import type { Patient } from './patient'
 
 /** 图片列表 */
 export type Image = {
@@ -54,4 +56,25 @@ export interface ConsultPayParams {
   paymentMethod: 0 | 1 // 支付方式，0 微信  1 支付宝
   orderId: string // 订单ID
   payCallback: string // 支付回调地址
+}
+
+/** 问诊订单 */
+
+export type ConsultOrderItem = Consult & {
+  createTime: string // 创建时间
+  orderNo: string // 订单编号
+  status: ConsultOrderStatus // 订单状态
+  statusValue: string // 订单状态值
+  typeValue: string // 订单类型值
+  countdown: number // 倒计时
+  prescriptionId?: string // 处方ID
+  evaluateId: number // 评价ID
+
+  payment: number // 应付金额
+  couponDeduction: number // 优惠券抵扣
+  ponitDeduction: number // 积分抵扣
+  actualPayment: number // 实际支付
+
+  docInfo: Doctor // 医生信息
+  patientInfo: Patient // 患者信息
 }

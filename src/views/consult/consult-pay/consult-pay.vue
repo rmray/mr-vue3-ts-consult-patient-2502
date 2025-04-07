@@ -5,7 +5,7 @@ import { getPatientInfo } from '@/services/patient'
 import { useConsultStore } from '@/store'
 import type { ConsultOrderPreData } from '@/types/consult'
 import type { Patient } from '@/types/patient'
-import { showConfirmDialog, showLoadingToast, showToast, type ActionSheetAction } from 'vant'
+import { showConfirmDialog, showLoadingToast, showToast } from 'vant'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -25,6 +25,7 @@ async function onSubmit() {
 
   // 生成订单id
   const res = await getConsultOrderId(consultStore.consult)
+  console.log(res)
   orderId.value = res.data.id
 
   // 清空问诊记录信息
@@ -161,14 +162,14 @@ async function onPaySubmit() {
   >
     <p class="amount">¥ 39.00</p>
     <van-cell-group>
-      <!-- <van-cell title="微信支付" @click="paymentMethod = 0">
+      <van-cell title="微信支付" @click="paymentMethod = 0">
         <template #icon>
           <cp-icon name="consult-wechat"></cp-icon>
         </template>
         <template #extra>
           <van-checkbox :checked="paymentMethod === 0" disabled></van-checkbox>
         </template>
-      </van-cell> -->
+      </van-cell>
       <van-cell title="支付宝支付" @click="paymentMethod = 1">
         <template #icon>
           <cp-icon name="consult-alipay"></cp-icon>

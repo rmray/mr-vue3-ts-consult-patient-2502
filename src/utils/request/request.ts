@@ -19,9 +19,9 @@ class MrRequest {
     this.instance.interceptors.response.use(
       (res) => {
         // console.log('res: ', res)
-        // if (res.data.code === 10000) {
+        // if (res.data.code !== 10000) {
         //   // Promise.reject(new Error('请求失败'))
-        //   throw new Error('请求失败')
+        //   throw new Error(`请求出错，需要被捕获！${res.data}`)
         // }
         return res.data
       },
@@ -47,15 +47,18 @@ class MrRequest {
       config = config.interceptors.requestInterceptor(config)
     }
     return new Promise<R>((resolve, reject) => {
+      // console.log(config)
       this.instance
         .request<any, R>(config)
         .then((res) => {
+          // console.log(res)
           if (config.interceptors?.responseInterceptor) {
             res = config.interceptors.responseInterceptor(res)
           }
           resolve(res)
         })
         .catch((err) => {
+          // console.log(err)
           if (config.interceptors?.responseInterceptorCatch) {
             err = config.interceptors.responseInterceptorCatch(err)
           }
@@ -65,23 +68,23 @@ class MrRequest {
   }
 
   get<R = any>(config: MrAxiosRequestConfig<AxiosRequestConfig, R>) {
-    return this.request({ ...config, method: 'GET' })
+    return this.request<R>({ ...config, method: 'GET' })
   }
 
   post<R = any>(config: MrAxiosRequestConfig<AxiosRequestConfig, R>) {
-    return this.request({ ...config, method: 'POST' })
+    return this.request<R>({ ...config, method: 'POST' })
   }
 
   delete<R = any>(config: MrAxiosRequestConfig<AxiosRequestConfig, R>) {
-    return this.request({ ...config, method: 'DELETE' })
+    return this.request<R>({ ...config, method: 'DELETE' })
   }
 
   patch<R = any>(config: MrAxiosRequestConfig<AxiosRequestConfig, R>) {
-    return this.request({ ...config, method: 'PATCH' })
+    return this.request<R>({ ...config, method: 'PATCH' })
   }
 
   put<R = any>(config: MrAxiosRequestConfig<AxiosRequestConfig, R>) {
-    return this.request({ ...config, method: 'PUT' })
+    return this.request<R>({ ...config, method: 'PUT' })
   }
 }
 

@@ -51,10 +51,10 @@ const router = createRouter({
     },
     {
       path: '/room',
-      meta: { title: '医生问诊室' },
+      meta: { title: '问诊室' },
       component: () => import('@/views/room/room.vue'),
       beforeEnter: (to) => {
-        if (to.query.payResult === 'false') return '/consult'
+        if (to.query.payResult === 'false') return '/'
       }
     },
     { path: '/order', meta: { title: '订单' }, component: () => import('@/views/order/order.vue') }

@@ -1,11 +1,8 @@
 import MrRequest from './request'
 import { BASE_URL, TIME_OUT } from './config'
 import { localCache } from '../cache'
-import { useRouter } from 'vue-router'
+import router from '@/router'
 
-// console.log(BASE_URL, TIME_OUT)
-
-const router = useRouter()
 const mrRequest = new MrRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
@@ -25,13 +22,17 @@ const mrRequest = new MrRequest({
     },
     requestInterceptorCatch: (err: any) => err,
     responseInterceptor: (res) => {
+      // console.log(res, router)
       if (res.status === 401) {
         // token失效
         router.push('/login')
       }
       return res
     },
-    responseInterceptorCatch: (err) => err
+    responseInterceptorCatch: (err) => {
+      console.log('实例拦截器中捕获错误:', err)
+      return err
+    }
   }
 })
 

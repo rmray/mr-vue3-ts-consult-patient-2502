@@ -21,3 +21,8 @@ export function loginByCode(data: { mobile: string; code: string }) {
 export function getUserInfo() {
   return mrRequest.get<Result<UserInfo>>({ url: '/patient/myUser' })
 }
+
+/** 获取未读消息数量 */
+export function getUnreadMessageCount() {
+  return mrRequest.get<Result<number>>({ url: '/patient/message/unRead/all' })
+}

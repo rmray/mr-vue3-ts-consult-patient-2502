@@ -1,5 +1,6 @@
 import type { Result } from '@/types/base'
 import type {
+  ConsultOrderItem,
   ConsultOrderPreData,
   ConsultOrderPreParams,
   ConsultPartial,
@@ -7,6 +8,7 @@ import type {
   Department,
   Image
 } from '@/types/consult'
+import type { EvaluateParams } from '@/types/room'
 import mrRequest from '@/utils/request'
 
 /** 获取所有科室列表 */
@@ -40,4 +42,20 @@ export function getConsultOrderId(consult: ConsultPartial) {
 /** 生成支付url */
 export function getPayUrl(params: ConsultPayParams) {
   return mrRequest.post<Result<{ payUrl: string }>>({ url: '/patient/consult/pay', data: params })
+}
+
+/** 获取问诊订单详情 */
+export function getConsultOrderDetail(orderId: string) {
+  return mrRequest.get<Result<ConsultOrderItem>>({ url: '/patient/consult/order/detail', params: { orderId } })
+}
+
+/** 获取原始处方 */
+export function getPrescription(id: string) {
+  return mrRequest.get<Result<Image>>({ url: `/patient/consult/prescription/${id}` })
+}
+
+/** 评价问诊订单 */
+export function evaluateConsultOrder(data: EvaluateParams) {
+  console.log(data)
+  return mrRequest.post({ url: '/patient/order/evaluate', data })
 }
